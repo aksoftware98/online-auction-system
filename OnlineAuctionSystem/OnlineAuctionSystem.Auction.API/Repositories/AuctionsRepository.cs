@@ -87,24 +87,24 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
             var auctions = new List<Models.Auction>();
             while (dataReader.Read())
             {
-                var auction = new Models.Auction()
-                {
-                    Id = (int)dataReader["idAuction"],
-                    Name = dataReader["name"].ToString(),
-                    Description = dataReader["description"]?.ToString(),
-                    ActiveInHours = (int)dataReader["activeInHours"],
-                    AuctionDate = (DateTime)dataReader["auctionDate"],
-                    BidId = dataReader["bidId"].ToString(),
-                    BidPrice = (decimal)dataReader["bidPrice"],
-                    BidUserId = dataReader["bidUser"]?.ToString(),
-                    Image = dataReader["image"].ToString(),
-                    IsActive = (int)dataReader["isActive"],
-                    IsPaymentMade = (bool)dataReader["isPaymentMade"],
-                    StartPrice = (decimal)dataReader["startingPrice"],
-                    UserId = dataReader["userId"].ToString(),
-                    Status = (int)dataReader["status"],
-                    Username = dataReader["username"].ToString()
-                };
+                var auction = new Models.Auction();
+
+                auction.Id = (int)dataReader["idAuction"];
+                auction.Name = dataReader["name"].ToString();
+                auction.Description = dataReader["description"]?.ToString();
+                auction.ActiveInHours = (int)dataReader["activeInHours"];
+                auction.AuctionDate = (DateTime)dataReader["auctionDate"];
+                auction.BidId = dataReader["bidId"].ToString();
+                auction.BidPrice = (decimal?)(dataReader["bidPrice"] ?? 0);
+                auction.BidUserId = dataReader["bidUser"]?.ToString();
+                auction.Image = dataReader["image"].ToString();
+                auction.IsActive = Convert.ToBoolean(dataReader["isActive"]);
+                auction.IsPaymentMade = Convert.ToBoolean((sbyte)dataReader["isPaymentMade"]);
+                auction.StartPrice = (decimal)dataReader["startingPrice"];
+                auction.UserId = dataReader["userId"].ToString();
+                auction.Status = (int)dataReader["status"];
+                auction.Username = dataReader["username"].ToString();
+                
                 auctions.Add(auction);
             }
 
@@ -136,8 +136,8 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
                 BidPrice = (decimal)result["bidPrice"],
                 BidUserId = result["bidUserId"]?.ToString(),
                 Image = result["image"].ToString(),
-                IsActive = (int)result["isActive"],
-                IsPaymentMade = (bool)result["isPaymentMade"],
+                IsActive = Convert.ToBoolean(result["isActive"]),
+                IsPaymentMade = Convert.ToBoolean(result["isPaymentMade"]),
                 StartPrice = (decimal)result["startPrice"],
                 Status = (int)result["status"],
                 Username = result["username"].ToString(),

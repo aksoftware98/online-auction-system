@@ -39,7 +39,7 @@ namespace OnlineAuctionSystem.Auction.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Models.Auction model)
+        public async Task<IActionResult> Post([FromBody]Models.Auction model)
         {
             var result = await _repo.AddAsync(model);
             return Ok(result);

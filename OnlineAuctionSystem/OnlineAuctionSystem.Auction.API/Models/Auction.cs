@@ -16,8 +16,8 @@ namespace OnlineAuctionSystem.Auction.API.Models
         public int Status { get; set; }
         public string Image { get; set; }
         public int ActiveInHours { get; set; }
-        public decimal BidPrice { get; set; }
-        public int IsActive { get; set; }
+        public decimal? BidPrice { get; set; }
+        public bool IsActive { get; set; }
         public string Username { get; set; }
         public bool IsPaymentMade { get; set; }
         public string BidUserId { get; set; }

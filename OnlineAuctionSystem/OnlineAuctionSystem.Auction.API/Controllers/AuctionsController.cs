@@ -32,7 +32,7 @@ namespace OnlineAuctionSystem.Auction.API.Controllers
         }
 
 
-        [HttpGet("byuserid/{bidderId}")]
+        [HttpGet("byuserid/{userid}")]
         public async Task<IActionResult> GetAllByUser(string userId)
         {
             return Ok(await _repo.GetAllByUserIdAsync(userId));

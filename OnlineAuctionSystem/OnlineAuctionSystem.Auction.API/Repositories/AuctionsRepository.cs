@@ -55,7 +55,7 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
         {
             string query = "SELECT * FROM auctions WHERE isActive = 1 ORDER BY auctionDate DESC";
             var command = new MySqlCommand(query, _connection);
-            return await GetAuctions(command); 
+            return await GetAuctions(command);
         }
 
         public async Task<IEnumerable<Models.Auction>> GetAllByUserIdAsync(string userId)
@@ -95,7 +95,7 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
                 auction.ActiveInHours = (int)dataReader["activeInHours"];
                 auction.AuctionDate = (DateTime)dataReader["auctionDate"];
                 auction.BidId = dataReader["bidId"].ToString();
-                auction.BidPrice = (decimal?)(dataReader["bidPrice"] ?? 0);
+                auction.BidPrice = dataReader["bidPrice"] == DBNull.Value ? (decimal?)null : Convert.ToDecimal(dataReader["bidPrice"]);
                 auction.BidUserId = dataReader["bidUser"]?.ToString();
                 auction.Image = dataReader["image"].ToString();
                 auction.IsActive = Convert.ToBoolean(dataReader["isActive"]);
@@ -104,11 +104,11 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
                 auction.UserId = dataReader["userId"].ToString();
                 auction.Status = (int)dataReader["status"];
                 auction.Username = dataReader["username"].ToString();
-                
+
                 auctions.Add(auction);
             }
 
-            _connection.Close(); 
+            _connection.Close();
             return auctions;
         }
 
@@ -133,7 +133,7 @@ namespace OnlineAuctionSystem.Auction.API.Repositories
                 ActiveInHours = (int)result["activeInHours"],
                 AuctionDate = (DateTime)result["auctionDate"],
                 BidId = result["bidId"].ToString(),
-                BidPrice = (decimal)result["bidPrice"],
+                BidPrice = result["bidPrice"] == DBNull.Value ? (decimal?)null : Convert.ToDecimal(result["bidPrice"]),
                 BidUserId = result["bidUserId"]?.ToString(),
                 Image = result["image"].ToString(),
                 IsActive = Convert.ToBoolean(result["isActive"]),
